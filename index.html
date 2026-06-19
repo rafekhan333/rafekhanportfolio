@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rafe Khan — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0A0F;
+      --surface:   #12121A;
+      --border:    #1E1E2E;
+      --accent:    #6C63FF;
+      --accent2:   #A78BFA;
+      --glow:      rgba(108,99,255,0.18);
+      --text:      #E8E8F0;
+      --muted:     #7A7A9A;
+      --card:      #14141F;
+      --tag-bg:    #1A1A2E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 5vw;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      color: var(--accent2);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 5vw 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -120px; left: -120px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 860px;
+      position: relative; z-index: 1;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--accent); letter-spacing: 0.08em;
+      margin-bottom: 1.4rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block; width: 28px; height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+    .name-highlight {
+      background: linear-gradient(135deg, #6C63FF 0%, #A78BFA 50%, #C4B5FD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.15rem; color: var(--muted);
+      max-width: 540px; margin-bottom: 2.4rem;
+      line-height: 1.75;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 0.8rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      border: none; border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-ghost {
+      padding: 0.8rem 2rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute; bottom: 2.4rem; left: 5vw;
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.78rem; color: var(--muted); letter-spacing: 0.06em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .scroll-line {
+      width: 40px; height: 1px; background: var(--border);
+      position: relative; overflow: hidden;
+    }
+    .scroll-line::after {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--accent);
+      animation: slide 2s ease-in-out infinite;
+    }
+    @keyframes slide { 0%,100%{left:-100%} 50%{left:100%} }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 5vw; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted); font-size: 1.05rem; line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+    .about-text p span { color: var(--text); font-weight: 500; }
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem 1.2rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .stat-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      color: var(--accent2); line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── EDUCATION ── */
+    .edu-cards { display: flex; flex-direction: column; gap: 1.2rem; }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem 2rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .edu-card:hover { border-color: var(--accent); transform: translateX(6px); }
+    .edu-badge {
+      width: 48px; height: 48px; border-radius: 10px;
+      background: var(--glow);
+      border: 1px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .edu-info { flex: 1; }
+    .edu-degree {
+      font-weight: 600; font-size: 1.05rem; margin-bottom: 0.3rem;
+    }
+    .edu-school { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.5rem; }
+    .edu-score {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--accent2);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; padding: 0.2rem 0.7rem;
+      border-radius: 4px; border: 1px solid var(--border);
+    }
+    .edu-year { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .skill-card:hover { border-color: var(--accent2); transform: translateY(-4px); }
+    .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .skill-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .skill-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.65; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem; color: var(--accent2);
+      background: var(--tag-bg); border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .project-icon { font-size: 1.8rem; }
+    .project-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: #4ADE80;
+      background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+    }
+    .project-name { font-weight: 700; font-size: 1.1rem; }
+    .project-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.65; }
+
+    /* ── CERTIFICATIONS ── */
+    #certifications { background: var(--bg); border-top: 1px solid var(--border); }
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; margin-bottom: 2rem; }
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.8rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .cert-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #6C63FF, #A78BFA);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .cert-card:hover { border-color: var(--accent2); transform: translateY(-5px); }
+    .cert-card:hover::after { opacity: 1; }
+    .cert-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cert-logo { font-size: 2rem; }
+    .cert-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+    .cert-free-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+      color: #4ADE80; background: rgba(74,222,128,0.12);
+      border: 1px solid rgba(74,222,128,0.3);
+      padding: 0.2rem 0.5rem; border-radius: 4px;
+    }
+    .cert-level {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 4px;
+      font-weight: 600; letter-spacing: 0.04em;
+    }
+    .cert-level.beginner { color: #60A5FA; background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.25); }
+    .cert-level.intermediate { color: #FBBF24; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25); }
+    .cert-name { font-weight: 700; font-size: 1.05rem; }
+    .cert-issuer { font-size: 0.82rem; color: var(--accent2); font-weight: 500; }
+    .cert-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.65; flex: 1; }
+    .cert-meta { display: flex; gap: 1rem; font-size: 0.8rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .cert-btn {
+      display: inline-block; margin-top: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--glow); border: 1px solid var(--accent);
+      color: var(--accent2); font-size: 0.88rem; font-weight: 600;
+      border-radius: 6px; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      text-align: center;
+    }
+    .cert-btn:hover { background: var(--accent); color: #fff; }
+    .roadmap-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.6rem 2rem;
+      display: flex; align-items: center; gap: 1.4rem;
+      flex-wrap: wrap; margin-top: 1.5rem;
+    }
+    .roadmap-icon { font-size: 2rem; }
+    .roadmap-title { font-weight: 700; margin-bottom: 0.6rem; }
+    .roadmap-steps { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .roadmap-step {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+      background: var(--tag-bg); color: var(--accent2);
+      border: 1px solid var(--border); padding: 0.3rem 0.8rem; border-radius: 6px;
+    }
+    .roadmap-arrow { color: var(--accent); font-weight: 700; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--surface); border-top: 1px solid var(--border); }
+    .contact-box {
+      max-width: 640px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 3rem;
+      position: relative; overflow: hidden;
+    }
+    .contact-box::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #6C63FF, #A78BFA, #C4B5FD);
+    }
+    .contact-intro { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.75; }
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent2); }
+    .contact-icon { font-size: 1.3rem; }
+    .contact-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.15rem; font-family: 'JetBrains Mono', monospace; }
+    .contact-value { font-weight: 500; font-size: 0.95rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+      font-size: 0.83rem; color: var(--muted);
+    }
+    .footer-tag {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .edu-card { flex-direction: column; }
+      .contact-box { padding: 2rem 1.4rem; }
+      nav { padding: 1rem 4vw; }
+      .nav-links { gap: 1.2rem; }
+    }
+    @media (max-width: 500px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── FADE IN ── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">RK</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Cyber</a></li>
+      <li><a href="#fullstack">Full Stack</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">B.Tech Student &amp; Developer</div>
+      <h1>Hi, I'm<br><span class="name-highlight">Rafe Khan</span></h1>
+      <p class="hero-desc">
+        Engineering student with a passion for <strong style="color:var(--text)">problem solving</strong> and <strong style="color:var(--text)">critical thinking</strong>. Building skills at SSGB College of Engineering &amp; Technology, Bhusawal.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      SCROLL
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="fade-up">
+      <p class="section-label">// about me</p>
+      <h2 class="section-title">Who I Am</h2>
+    </div>
+    <div class="about-grid fade-up">
+      <div class="about-text">
+        <p>
+          I'm <span>Rafe Khan</span>, a B.Tech student at <span>Shri Sant Gadge Baba College of Engineering and Technology, Bhusawal</span>. I'm driven by a genuine curiosity for how things work and a desire to solve real-world problems through technology.
+        </p>
+        <p>
+          My strengths lie in <span>analytical thinking</span> and <span>breaking down complex problems</span> into clear, actionable steps. I believe great engineering starts with understanding the problem deeply before writing a single line of code.
+        </p>
+        <p>
+          I'm currently growing my technical foundation while working on personal projects, sharpening my coding skills, and exploring fields like web development, data structures, and algorithms.
+        </p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value">B.Tech</div>
+          <div class="stat-label">Current Degree</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">74%</div>
+          <div class="stat-label">HSC (12th) Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">65%</div>
+          <div class="stat-label">SSC (10th) Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Problems to Solve</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="fade-up">
+      <p class="section-label">// education</p>
+      <h2 class="section-title">Academic Journey</h2>
+    </div>
+    <div class="edu-cards fade-up">
+      <div class="edu-card">
+        <div class="edu-badge">🎓</div>
+        <div class="edu-info">
+          <div class="edu-degree">Bachelor of Technology (B.Tech)</div>
+          <div class="edu-school">Shri Sant Gadge Baba College of Engineering &amp; Technology, Bhusawal</div>
+          <span class="edu-score">Currently Pursuing</span>
+        </div>
+        <div class="edu-year">2024 – Present</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-badge">📘</div>
+        <div class="edu-info">
+          <div class="edu-degree">Higher Secondary Certificate (HSC) — 12th Grade</div>
+          <div class="edu-school">Maharashtra State Board</div>
+          <span class="edu-score">74%</span>
+        </div>
+        <div class="edu-year">2024</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-badge">📗</div>
+        <div class="edu-info">
+          <div class="edu-degree">Secondary School Certificate (SSC) — 10th Grade</div>
+          <div class="edu-school">Maharashtra State Board</div>
+          <span class="edu-score">65%</span>
+        </div>
+        <div class="edu-year">2022</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="fade-up">
+      <p class="section-label">// skills</p>
+      <h2 class="section-title">What I Bring</h2>
+    </div>
+    <div class="skills-grid fade-up">
+      <div class="skill-card">
+        <div class="skill-icon">🧩</div>
+        <div class="skill-name">Problem Solving</div>
+        <div class="skill-desc">Ability to dissect complex challenges, identify root causes, and engineer clean, logical solutions step by step.</div>
+        <div class="skill-tags">
+          <span class="tag">Algorithms</span><span class="tag">Logic</span><span class="tag">DSA</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔍</div>
+        <div class="skill-name">Critical Thinking</div>
+        <div class="skill-desc">Evaluating information objectively, questioning assumptions, and making reasoned decisions even under uncertainty.</div>
+        <div class="skill-tags">
+          <span class="tag">Analysis</span><span class="tag">Research</span><span class="tag">Decision-making</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">Programming</div>
+        <div class="skill-desc">Growing proficiency in core programming languages studied during B.Tech. Comfortable reading, writing, and debugging code.</div>
+        <div class="skill-tags">
+          <span class="tag">C</span><span class="tag">Python</span><span class="tag">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📐</div>
+        <div class="skill-name">Engineering Fundamentals</div>
+        <div class="skill-desc">Strong grounding in core engineering concepts — mathematics, physics, and computational thinking.</div>
+        <div class="skill-tags">
+          <span class="tag">Mathematics</span><span class="tag">Physics</span><span class="tag">CS Theory</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤝</div>
+        <div class="skill-name">Communication</div>
+        <div class="skill-desc">Able to articulate ideas clearly, collaborate in teams, and present solutions in an understandable way.</div>
+        <div class="skill-tags">
+          <span class="tag">Teamwork</span><span class="tag">Presentation</span><span class="tag">Writing</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📈</div>
+        <div class="skill-name">Continuous Learning</div>
+        <div class="skill-desc">Actively self-studying through online resources, practicing coding challenges, and building personal projects.</div>
+        <div class="skill-tags">
+          <span class="tag">Self-study</span><span class="tag">Adaptability</span><span class="tag">Growth</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="fade-up">
+      <p class="section-label">// projects</p>
+      <h2 class="section-title">Things I've Built</h2>
+    </div>
+    <div class="projects-grid fade-up">
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🌐</div>
+          <span class="project-status">Live</span>
+        </div>
+        <div class="project-name">Personal Portfolio Website</div>
+        <div class="project-desc">This very portfolio — designed and built from scratch using HTML, CSS, and JavaScript to showcase my skills and journey.</div>
+        <div class="skill-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🧮</div>
+          <span class="project-status">Completed</span>
+        </div>
+        <div class="project-name">CGPA Calculator</div>
+        <div class="project-desc">A simple web app that calculates CGPA and percentage for B.Tech students — built to solve a real daily need on campus.</div>
+        <div class="skill-tags">
+          <span class="tag">HTML</span><span class="tag">JavaScript</span><span class="tag">Logic</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">📋</div>
+          <span class="project-status">In Progress</span>
+        </div>
+        <div class="project-name">Task Manager CLI</div>
+        <div class="project-desc">A command-line task management tool written in Python to practice file handling, data structures, and modular code design.</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">CLI</span><span class="tag">File I/O</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="fade-up">
+      <p class="section-label">// cybersecurity</p>
+      <h2 class="section-title">Free Cyber Certifications</h2>
+      <p style="color:var(--muted);max-width:600px;margin-bottom:2.5rem;line-height:1.75;">These are industry-recognized cybersecurity courses with <strong style="color:var(--accent2)">100% free certificates</strong>. Each one adds real value to your resume and builds practical security knowledge.</p>
+    </div>
+    <div class="cert-grid fade-up">
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🛡️</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">Harvard CS50 Cybersecurity</div>
+        <div class="cert-issuer">Harvard University (OpenCourseWare)</div>
+        <div class="cert-desc">5-week course covering how to secure accounts, systems, and data. Earn a free official CS50 certificate upon completion. No prior experience needed.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ 5 weeks</span>
+          <span class="cert-platform">cs50.harvard.edu</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Network Security</span><span class="tag">Threat Detection</span><span class="tag">Data Privacy</span>
+        </div>
+        <a href="https://cs50.harvard.edu/cybersecurity/" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🔐</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">Cisco Intro to Cybersecurity</div>
+        <div class="cert-issuer">Cisco Networking Academy</div>
+        <div class="cert-desc">Approx. 15-hour self-paced course covering the cyber threat landscape, network security, and how to protect digital assets. Free certificate of completion.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~15 hours</span>
+          <span class="cert-platform">skillsforall.com</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Networking</span><span class="tag">Threat Landscape</span><span class="tag">Defense</span>
+        </div>
+        <a href="https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🔥</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">Fortinet NSE 1, 2 & 3</div>
+        <div class="cert-issuer">Fortinet Network Security Expert</div>
+        <div class="cert-desc">Three short courses (about 8 hours total) covering cybersecurity awareness, the threat landscape, and core security concepts. Free badge + certificate for each level.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~8 hours</span>
+          <span class="cert-platform">training.fortinet.com</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Security Awareness</span><span class="tag">Malware</span><span class="tag">Cloud Security</span>
+        </div>
+        <a href="https://training.fortinet.com/local/staticpage/view.php?page=nse_1" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🌐</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level intermediate">Intermediate</span>
+          </div>
+        </div>
+        <div class="cert-name">Google Cybersecurity Certificate</div>
+        <div class="cert-issuer">Google (via Coursera Financial Aid)</div>
+        <div class="cert-desc">8-course professional certificate covering Linux, Python, SIEM tools, and incident response. Apply for 100% financial aid on Coursera — commonly approved for students.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~6 months</span>
+          <span class="cert-platform">coursera.org</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">Linux</span><span class="tag">SIEM</span><span class="tag">SOC</span>
+        </div>
+        <a href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank" class="cert-btn">Apply for Aid →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🇮🇳</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">Cybersecurity Fundamentals</div>
+        <div class="cert-issuer">Great Learning (India)</div>
+        <div class="cert-desc">Free self-paced course covering OSI model, network security, types of cyber attacks, and defense strategies. Free certificate of completion. Great for Indian students.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~4 hours</span>
+          <span class="cert-platform">mygreatlearning.com</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">OSI Model</span><span class="tag">Cyber Attacks</span><span class="tag">Network Security</span>
+        </div>
+        <a href="https://www.mygreatlearning.com/cybersecurity/free-courses" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🏛️</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level intermediate">Intermediate</span>
+          </div>
+        </div>
+        <div class="cert-name">EC-Council Essentials Series</div>
+        <div class="cert-issuer">EC-Council (Cybersecurity Exchange)</div>
+        <div class="cert-desc">Free beginner courses on ethical hacking, digital forensics, and network defense from one of the world's top cybersecurity certification bodies (makers of CEH).</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ Self-paced</span>
+          <span class="cert-platform">eccouncil.org</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Ethical Hacking</span><span class="tag">Forensics</span><span class="tag">Network Defense</span>
+        </div>
+        <a href="https://www.eccouncil.org/cybersecurity-exchange/cyber-novice/free-cybersecurity-courses-beginners/" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+    </div>
+
+    <!-- Roadmap tip -->
+    <div class="roadmap-box fade-up">
+      <div class="roadmap-icon">🗺️</div>
+      <div>
+        <div class="roadmap-title">Recommended Learning Order</div>
+        <div class="roadmap-steps">
+          <span class="roadmap-step">1. Cisco Intro</span>
+          <span class="roadmap-arrow">→</span>
+          <span class="roadmap-step">2. Fortinet NSE 1–3</span>
+          <span class="roadmap-arrow">→</span>
+          <span class="roadmap-step">3. Harvard CS50</span>
+          <span class="roadmap-arrow">→</span>
+          <span class="roadmap-step">4. Google Certificate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL STACK -->
+  <section id="fullstack" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="fade-up">
+      <p class="section-label">// full stack development</p>
+      <h2 class="section-title">Free Full Stack Courses</h2>
+      <p style="color:var(--muted);max-width:640px;margin-bottom:2.5rem;line-height:1.75;">Master both frontend and backend development with these <strong style="color:var(--accent2)">100% free courses and certificates</strong> from world-class platforms. Build real projects and become job-ready.</p>
+    </div>
+
+    <div class="cert-grid fade-up">
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🏕️</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner–Advanced</span>
+          </div>
+        </div>
+        <div class="cert-name">freeCodeCamp Full Stack</div>
+        <div class="cert-issuer">freeCodeCamp.org</div>
+        <div class="cert-desc">The gold standard free coding curriculum. Earn separate certificates in Responsive Web Design, JavaScript, Front End Libraries, Data Structures, APIs & Microservices, and more — all 100% free forever.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ Self-paced</span>
+          <span class="cert-platform">freecodecamp.org</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Node.js</span>
+        </div>
+        <a href="https://www.freecodecamp.org/learn" target="_blank" class="cert-btn">Start Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🔵</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level intermediate">Intermediate</span>
+          </div>
+        </div>
+        <div class="cert-name">IBM Full Stack Software Developer</div>
+        <div class="cert-issuer">IBM (via Coursera Financial Aid)</div>
+        <div class="cert-desc">Professional-grade 12-course program covering HTML, CSS, JavaScript, React, Node.js, Docker, Kubernetes, microservices, and cloud deployment. Apply for 100% Coursera financial aid — widely approved for students.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~4–6 months</span>
+          <span class="cert-platform">coursera.org</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Docker</span><span class="tag">Cloud</span>
+        </div>
+        <a href="https://www.coursera.org/professional-certificates/ibm-full-stack-cloud-developer" target="_blank" class="cert-btn">Apply for Aid →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🌍</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">The Odin Project</div>
+        <div class="cert-issuer">The Odin Project (Open Source)</div>
+        <div class="cert-desc">A completely free, open-source full stack curriculum used by thousands. Covers Foundations, Full Stack JavaScript (React + Node), and Full Stack Ruby on Rails with real project-based learning and a completion certificate.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ Self-paced</span>
+          <span class="cert-platform">theodinproject.com</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Git</span>
+        </div>
+        <a href="https://www.theodinproject.com" target="_blank" class="cert-btn">Start Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🇮🇳</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">Full Stack Web Development</div>
+        <div class="cert-issuer">Great Learning Academy (India)</div>
+        <div class="cert-desc">Free self-paced courses covering HTML, CSS, JavaScript, ReactJS, Node.js, and databases. Free certificate of completion after passing the assessment. Ideal for Indian students with no prerequisites.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~10–15 hours</span>
+          <span class="cert-platform">mygreatlearning.com</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">ReactJS</span>
+        </div>
+        <a href="https://www.mygreatlearning.com/full-stack-web-development/free-courses" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🟡</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level intermediate">Intermediate</span>
+          </div>
+        </div>
+        <div class="cert-name">Meta Front-End Developer Certificate</div>
+        <div class="cert-issuer">Meta (via Coursera Financial Aid)</div>
+        <div class="cert-desc">9-course program by Meta covering HTML, CSS, JavaScript, React, UX/UI design, and coding interviews. Apply for Coursera financial aid to access the full certificate completely free.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~7 months</span>
+          <span class="cert-platform">coursera.org</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">UX/UI</span><span class="tag">Git</span>
+        </div>
+        <a href="https://www.coursera.org/professional-certificates/meta-front-end-developer" target="_blank" class="cert-btn">Apply for Aid →</a>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-logo">🏛️</div>
+          <div class="cert-badges">
+            <span class="cert-free-tag">FREE CERT</span>
+            <span class="cert-level beginner">Beginner</span>
+          </div>
+        </div>
+        <div class="cert-name">CS50's Web Programming with Python & JS</div>
+        <div class="cert-issuer">Harvard University (OpenCourseWare)</div>
+        <div class="cert-desc">Harvard's free web development course covering HTML, CSS, JavaScript, Python, Django, SQL, and Git. Build 5 real projects and earn a free official CS50 certificate upon completion.</div>
+        <div class="cert-meta">
+          <span class="cert-duration">⏱ ~8 weeks</span>
+          <span class="cert-platform">cs50.harvard.edu</span>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">Django</span><span class="tag">JavaScript</span><span class="tag">SQL</span>
+        </div>
+        <a href="https://cs50.harvard.edu/web/" target="_blank" class="cert-btn">Enroll Free →</a>
+      </div>
+
+    </div>
+
+    <!-- Full Stack Roadmap -->
+    <div class="roadmap-box fade-up">
+      <div class="roadmap-icon">🗺️</div>
+      <div>
+        <div class="roadmap-title">Recommended Full Stack Learning Path</div>
+        <div class="roadmap-steps">
+          <span class="roadmap-step">1. freeCodeCamp HTML/CSS/JS</span>
+          <span class="roadmap-arrow">→</span>
+          <span class="roadmap-step">2. Harvard CS50 Web</span>
+          <span class="roadmap-arrow">→</span>
+          <span class="roadmap-step">3. The Odin Project</span>
+          <span class="roadmap-arrow">→</span>
+          <span class="roadmap-step">4. IBM Full Stack (Coursera)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="fade-up">
+      <p class="section-label">// contact</p>
+      <h2 class="section-title">Let's Connect</h2>
+    </div>
+    <div class="contact-box fade-up">
+      <p class="contact-intro">
+        Whether you want to collaborate on a project, discuss ideas, or just say hello — I'm always open to connecting with fellow students, developers, and curious minds.
+      </p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">PHONE</div>
+            <div class="contact-value">+91 9209477746</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">LOCATION</div>
+            <div class="contact-value">Bhusawal, Maharashtra, India</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🏫</div>
+          <div>
+            <div class="contact-label">COLLEGE</div>
+            <div class="contact-value">SSGBCE&T, Bhusawal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 <span class="footer-tag">Rafe Khan</span>. All rights reserved.</span>
+    <span class="footer-tag">// built with passion</span>
+  </footer>
+
+  <script>
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
